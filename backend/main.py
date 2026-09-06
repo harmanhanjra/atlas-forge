@@ -55,7 +55,7 @@ def health():
         "service": "atlas-forge",
         "version": "2.0.0",
         "security": "defensive-active",
-        "routing": "omniroute/nvidia/hermes/openrouter/free (Experiential removed)",
+        "routing": "free",
         "scoring": ">=80",
         "public_repo": True
     }
