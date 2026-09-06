@@ -1,6 +1,6 @@
 # ATLAS FORGE
 
-Defensive-security flagship framework. Public repository. No AI branding.
+Defensive-security flagship framework. Public repository. Built in-house. No third-party branding.
 Real endpoints with verifiable scoring. Score floor: >=80/100.
 
 ## Endpoints
@@ -30,4 +30,4 @@ Python 3.11+, FastAPI, Pydantic. No hardcoded secrets. No `shell=True`. Bind res
 `/score` returns >=80. `/health` confirms defensive-active. Zero leaks on clean fixtures via security scan.
 
 ## License
-Public. Defensive-only architecture.
+Public. Defensive architecture. Proprietary build.
