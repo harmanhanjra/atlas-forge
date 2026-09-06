@@ -11,9 +11,6 @@ Real endpoints with verifiable scoring. Score floor: >=80/100.
 - `GET /score` — defensive score (base 50 + headers 15 + deep 10 + audit 15 + redacted 10 = 100; verified >=80)
 - `GET /docs` — OpenAPI docs
 
-## Routing
-omniroute / NVIDIA free / hermes / openrouter / free. Experiential gateway removed.
-
 ## Security Layers
 1. Input validation (Pydantic / regex)
 2. Rate limiting (per-IP, 60s window, max 10 req)
