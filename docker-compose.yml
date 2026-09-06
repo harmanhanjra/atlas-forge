@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  api:
+    build: .
+    ports: ["8000:8000"]
+  web:
+    build: ./frontend
+    ports: ["3000:3000"]
+  db:
+    image: postgres:15
+  redis:
+    image: redis:7
+  vector:
+    image: qdrant/qdrant:latest

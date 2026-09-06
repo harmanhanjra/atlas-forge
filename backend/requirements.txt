@@ -1,0 +1,4 @@
+fastapi
+dantic
+uvicorn
+starlette

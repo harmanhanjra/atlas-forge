@@ -1,0 +1,9 @@
+name: CI
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - run: docker-compose build
+    - run: curl -sf http://localhost:8000/health || exit 1
