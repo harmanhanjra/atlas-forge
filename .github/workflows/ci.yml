@@ -1,9 +1,40 @@
 name: CI
 on: [push]
+
 jobs:
-  build:
+  api:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
     - uses: actions/checkout@v4
-    - run: docker-compose build
-    - run: curl -sf http://localhost:8000/health || exit 1
+    - uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+    - run: pip install -r requirements.txt uvicorn httpx
+    - name: Start API
+      run: |
+        python -m uvicorn main:app --app-dir backend --host 127.0.0.1 --port 8000 &
+        for i in $(seq 1 30); do
+          if curl -sf http://127.0.0.1:8000/health > /dev/null; then
+            echo "API is up"; exit 0
+          fi
+          sleep 1
+        done
+        echo "API failed to start"; exit 1
+    - name: Smoke-test endpoints
+      run: |
+        python - <<'EOF'
+        import httpx
+
+        base = "http://127.0.0.1:8000"
+        for path in ["/", "/docs", "/scan", "/audit", "/audit-log", "/score"]:
+            r = httpx.get(base + path, timeout=10)
+            r.raise_for_status()
+            print(path, "->", r.status_code)
+
+        health = httpx.get(base + "/health", timeout=10).json()
+        assert health["status"] == "ok", health
+        score = httpx.get(base + "/score", timeout=10).json()
+        assert score["score"] >= 80, score
+        print("all endpoint checks passed")
+        EOF
