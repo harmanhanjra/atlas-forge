@@ -2,14 +2,16 @@
   "telegram": 5499383690,
   "repo": "harmanhanjra/atlas-forge",
   "mode": "ambitious",
-  "routing": "free routing (gateway removed)",
+  "routing": "omniroute/nvidia/free/hermes/openrouter/free (Experiential removed)",
   "public": true,
   "security": "defensive-active",
   "version": "2.0.0",
   "score_target": ">=80",
   "score_actual": 85,
-  "layers": ["input-validate","rate-limit","security-headers","token-scan","audit-log","redaction"],
+  "layers": ["input-validate","rate-limit","security-headers","token-scan","audit-log","redaction","score"],
+  "layer_count": 7,
   "next_build_2h": true,
   "no_ai_branding": true,
-  "leaks_redacted": true
+  "leaks_redacted": true,
+  "end_report": true
 }
