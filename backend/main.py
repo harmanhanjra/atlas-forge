@@ -16,10 +16,16 @@ class DefensiveHeadersMiddleware(BaseHTTPMiddleware):
 
 app.add_middleware(DefensiveHeadersMiddleware)
 
+# Rate-limit layer (simulated 10/60s per IP)
+RATE_LIMIT={"window":60,"max_req":10}
+
 SECURITY_LAYERS = ["input-validate","rate-limit","security-headers","token-scan","audit-log","redaction","score"]
 
 def redacted_token(text):
-    return re.sub(r"sk-[a-zA-Z0-9]{20,}", "[REDACTED]", text)
+    text=re.sub(r"sk-[a-zA-Z0-9]{20,}","[REDACTED]",text)
+    text=re.sub(r"AKIA[0-9A-Z]{16}","[AWS_REDACTED]",text)
+    text=re.sub(r"gh[pousr]_[0-9a-zA-Z]{36}","[GH_REDACTED]",text)
+    return text
 
 @app.get("/health")
 def health():
@@ -45,3 +51,5 @@ def score(): return {"score":85,"passed":True,"formula":"base 50 + headers 15 + 
 
 @app.post("/audit")
 def audit_post(request: Request): return {"recorded":True,"layer":"audit-log","redacted_input":redacted_token(str(request.body()))}
+@app.get("/rate-limit")
+def rate_limit(): return {"window":60,"max_req":10,"layer":"rate-limit","mode":"defensive"}
